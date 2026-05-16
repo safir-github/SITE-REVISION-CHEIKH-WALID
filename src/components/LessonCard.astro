@@ -1,0 +1,138 @@
+---
+import type { Lesson } from '../data/books';
+
+interface Props {
+  lesson: Lesson;
+  index: number;
+}
+
+const { lesson, index } = Astro.props;
+---
+
+<div class="lesson-card" dir="rtl">
+  <div class="lesson-header">
+    <span class="lesson-number">{index}</span>
+    <h3 class="lesson-title">{lesson.title}</h3>
+    {lesson.date && <span class="lesson-date">{lesson.date}</span>}
+  </div>
+
+  <ul class="lesson-content">
+    {lesson.content.map((point) => (
+      <li>{point}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .lesson-card {
+    background-color: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+  }
+
+  .lesson-card:hover {
+    box-shadow: 0 4px 16px rgba(26, 95, 63, 0.12);
+  }
+
+  .lesson-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .lesson-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--accent-color);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .lesson-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+    flex: 1;
+  }
+
+  .lesson-date {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    font-weight: 500;
+  }
+
+  .lesson-content {
+    list-style: none;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .lesson-content li {
+    position: relative;
+    padding-right: 2rem;
+    line-height: 1.8;
+    color: var(--text-color);
+  }
+
+  .lesson-content li::before {
+    content: "✦";
+    position: absolute;
+    right: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 640px) {
+    .lesson-card {
+      padding: 1.5rem;
+    }
+
+    .lesson-header {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .lesson-title {
+      font-size: 1.2rem;
+      width: 100%;
+      order: 2;
+    }
+
+    .lesson-number {
+      order: 1;
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+
+    .lesson-date {
+      order: 3;
+      width: 100%;
+      text-align: left;
+    }
+
+    .lesson-content li {
+      padding-right: 1.5rem;
+      font-size: 0.95rem;
+    }
+  }
+</style>

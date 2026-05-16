@@ -1,0 +1,75 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import BookCard from '../components/BookCard.astro';
+import { getAllBooks } from '../data/books';
+
+const books = getAllBooks();
+---
+
+<MainLayout title="دروس الشيخ وليد البغدادي - الرئيسية">
+  <section class="books-section" dir="rtl">
+    <div class="section-header">
+      <h2 class="section-title">اختر الكتاب</h2>
+      <p class="section-description">اختر الكتاب لعرض دروسه وملاحظاته</p>
+    </div>
+
+    <div class="books-grid">
+      {books.map(book => (
+        <BookCard book={book} />
+      ))}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .books-section {
+    padding: 2rem 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-family: 'Amiri', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  .section-description {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    opacity: 0.8;
+  }
+
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .section-description {
+      font-size: 1rem;
+    }
+
+    .books-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .books-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
