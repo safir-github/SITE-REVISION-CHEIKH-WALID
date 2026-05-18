@@ -1,0 +1,198 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "دروس الشيخ وليد البغدادي",
+  description = "دروس في العقيدة من شرح الشيخ وليد البغدادي"
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <main class="book-main">
+      <slot />
+    </main>
+  </div>
+
+  <!-- Bouton flottant pour revenir en haut -->
+  <button id="scrollToTop" class="scroll-to-top" aria-label="العودة للأعلى">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+    </svg>
+  </button>
+
+  <style is:global>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #1a5f3f;
+      --secondary-color: #0d3d2a;
+      --accent-color: #d4af37;
+      --text-color: #2c2c2c;
+      --light-bg: #f8f6f3;
+      --white: #ffffff;
+      --border-color: #ddd9d3;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 4px 20px rgba(26, 95, 63, 0.12);
+      --reading-bg: #fafafa;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(to bottom, #f5f3f0 0%, #f8f6f3 100%);
+      color: var(--text-color);
+      line-height: 1.9;
+      min-height: 100vh;
+      font-size: 16px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "kern" 1, "liga" 1;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .book-main {
+      min-height: 100vh;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    /* Bouton flottant */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--accent-color);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(26, 95, 63, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(26, 95, 63, 0.4);
+    }
+
+    .scroll-to-top:active {
+      transform: translateY(-2px);
+    }
+
+    .scroll-to-top svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .book-main {
+        max-width: 100%;
+        padding: 1.5rem 0;
+      }
+
+      .scroll-to-top {
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .scroll-to-top svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .book-main {
+        max-width: 100%;
+        padding: 1rem 0;
+      }
+
+      .scroll-to-top {
+        bottom: 16px;
+        left: 16px;
+        width: 48px;
+        height: 48px;
+      }
+
+      .scroll-to-top svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    // Script pour le bouton flottant
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+
+    // Afficher/masquer le bouton selon le scroll
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+
+    // Remonter en haut au clic
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+</body>
+</html>

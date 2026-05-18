@@ -1,25 +1,30 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import HomeLayout from '../layouts/HomeLayout.astro';
 import BookCard from '../components/BookCard.astro';
 import { getAllBooks } from '../data/books';
 
 const books = getAllBooks();
 ---
 
-<MainLayout title="دروس الشيخ وليد البغدادي - الرئيسية">
+<HomeLayout title="دروس الشيخ وليد البغدادي - الرئيسية">
+
+  <!-- Header pour la page d'accueil -->
+  <header class="home-header">
+    <h1 class="home-title">دروس الشيخ وليد البغدادي</h1>
+  </header>
   <section class="books-section" dir="rtl">
-    <div class="section-header">
+    <div class="section-header fade-in">
       <h2 class="section-title">اختر الكتاب</h2>
       <p class="section-description">اختر الكتاب لعرض دروسه وملاحظاته</p>
     </div>
 
     <div class="books-grid">
-      {books.map(book => (
-        <BookCard book={book} />
+      {books.map((book, index) => (
+        <BookCard book={book} style={`animation-delay: ${index * 0.15}s`} />
       ))}
     </div>
   </section>
-</MainLayout>
+</HomeLayout>
 
 <style>
   .books-section {
@@ -52,7 +57,115 @@ const books = getAllBooks();
     margin-bottom: 2rem;
   }
 
+  /* Animations d'entrée */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-80px) rotate(-5deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) rotate(0);
+    }
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  :global(.book-card) {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  :global(.book-card:nth-child(1)) {
+    transition-delay: 0s;
+  }
+
+  :global(.book-card:nth-child(2)) {
+    transition-delay: 0.15s;
+  }
+
+  :global(.book-card:nth-child(3)) {
+    transition-delay: 0.3s;
+  }
+
+  :global(.book-card.is-visible) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Header personnalisé pour l'accueil */
+  .home-header {
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 24px;
+    color: var(--white);
+    box-shadow: 0 8px 32px rgba(26, 95, 63, 0.15);
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .home-title {
+    font-family: 'Amiri', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .home-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+
   @media (max-width: 768px) {
+    .books-section {
+      padding: 1.5rem 0;
+    }
+
+    .home-header {
+      padding: 2.5rem 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 20px;
+    }
+
+    .home-title {
+      font-size: 2.2rem;
+    }
+
+    .home-subtitle {
+      font-size: 1.1rem;
+    }
+
     .section-title {
       font-size: 2rem;
     }
@@ -64,12 +177,65 @@ const books = getAllBooks();
     .books-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+      padding: 0 0.5rem;
     }
   }
 
   @media (max-width: 480px) {
+    .home-header {
+      padding: 2rem 1.25rem;
+      margin-bottom: 1.5rem;
+      border-radius: 16px;
+    }
+
+    .home-title {
+      font-size: 1.9rem;
+    }
+
+    .home-subtitle {
+      font-size: 1rem;
+    }
+
     .books-grid {
       grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
     }
   }
 </style>
+
+<script>
+  // Observer les animations quand les éléments entrent dans le viewport
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Désactiver l'observation après l'animation
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observer le header
+  const header = document.querySelector('.home-header');
+  if (header) {
+    observer.observe(header);
+  }
+
+  // Observer les cartes de livres
+  document.querySelectorAll('.book-card').forEach(el => {
+    observer.observe(el);
+  });
+</script>

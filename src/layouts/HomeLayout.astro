@@ -25,18 +25,9 @@ const {
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1 class="site-title">دروس الشيخ وليد البغدادي</h1>
-      <p class="site-subtitle">علقمة بن فراس القرشي</p>
-    </header>
-
-    <main>
+    <main class="home-main">
       <slot />
     </main>
-
-    <footer>
-      <p>جميع الحقوق محفوظة &copy; {new Date().getFullYear()}</p>
-    </footer>
   </div>
 
   <style is:global>
@@ -78,45 +69,11 @@ const {
       padding: 0 24px;
     }
 
-    header {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: var(--white);
-      padding: 2.5rem 0;
-      text-align: center;
-      border-radius: 0 0 24px 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 2.5rem;
-    }
-
-    .site-title {
-      font-family: 'Amiri', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      line-height: 1.3;
-      letter-spacing: -0.02em;
-    }
-
-    .site-subtitle {
-      font-size: 1.15rem;
-      opacity: 0.95;
-      font-weight: 300;
-      letter-spacing: 0.01em;
-    }
-
-    main {
-      min-height: 60vh;
-      max-width: 900px;
+    .home-main {
+      min-height: 100vh;
+      max-width: 1100px;
       margin: 0 auto;
-    }
-
-    footer {
-      background-color: var(--secondary-color);
-      color: var(--white);
-      text-align: center;
-      padding: 1.5rem 0;
-      margin-top: 3rem;
-      border-radius: 20px 20px 0 0;
+      padding: 3rem 0;
     }
 
     @media (max-width: 768px) {
@@ -124,16 +81,9 @@ const {
         padding: 0 16px;
       }
 
-      .site-title {
-        font-size: 1.8rem;
-      }
-
-      .site-subtitle {
-        font-size: 1rem;
-      }
-
-      main {
+      .home-main {
         max-width: 100%;
+        padding: 2rem 0;
       }
     }
 
@@ -142,18 +92,9 @@ const {
         padding: 0 12px;
       }
 
-      main {
+      .home-main {
         max-width: 100%;
-      }
-
-      header {
-        padding: 2rem 0;
-        border-radius: 0 0 20px 20px;
-      }
-
-      footer {
-        border-radius: 16px 16px 0 0;
-        padding: 1.25rem 0;
+        padding: 1.5rem 0;
       }
     }
   </style>

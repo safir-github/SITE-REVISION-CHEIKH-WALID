@@ -16,7 +16,7 @@ const href = `/book/${book.id}`;
     </svg>
   </div>
   <div class="book-info">
-    <h3 class="book-title">{book.titleArabic}</h3>
+    <h3 class="book-title">{book.shortTitle}</h3>
     <p class="book-description">{book.description}</p>
     <div class="book-meta">
       <span class="lesson-count">
@@ -114,14 +114,65 @@ const href = `/book/${book.id}`;
       align-items: center;
       text-align: center;
       gap: 1rem;
+      padding: 1.75rem;
+    }
+
+    .book-icon {
+      width: 70px;
+      height: 70px;
+    }
+
+    .book-icon svg {
+      width: 40px;
+      height: 40px;
     }
 
     .book-title {
       font-size: 1.4rem;
     }
 
+    .book-description {
+      font-size: 0.95rem;
+    }
+
     .book-meta {
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .book-card {
+      padding: 1.5rem;
+      border-radius: 14px;
+      gap: 0.875rem;
+    }
+
+    .book-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 10px;
+    }
+
+    .book-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .book-title {
+      font-size: 1.25rem;
+    }
+
+    .book-description {
+      font-size: 0.9rem;
+    }
+
+    .lesson-count {
+      font-size: 0.85rem;
+    }
+
+    .lesson-count svg {
+      width: 18px;
+      height: 18px;
     }
   }
 </style>
