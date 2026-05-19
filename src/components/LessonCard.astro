@@ -1,0 +1,314 @@
+---
+import type { Lesson } from '../data/books';
+
+interface Props {
+  lesson: Lesson;
+  index: number;
+}
+
+const { lesson, index } = Astro.props;
+
+// Générer un titre simplifié pour la leçon
+const lessonTitles = [
+  'الدرس الأول',
+  'الدرس الثاني',
+  'الدرس الثالث',
+  'الدرس الرابع',
+  'الدرس الخامس',
+  'الدرس السادس',
+  'الدرس السابع',
+  'الدرس الثامن',
+  'الدرس التاسع',
+  'الدرس العاشر'
+];
+
+const lessonTitle = lessonTitles[index - 1] || `الدرس ${index}`;
+---
+
+<div class="lesson-card animated-entry" dir="rtl">
+  <div class="lesson-header">
+    <span class="lesson-number">{index}</span>
+    <h3 class="lesson-title">{lessonTitle}</h3>
+  </div>
+
+  <ul class="lesson-content">
+    {lesson.content.map((point) => (
+      <li>{point}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-100px) rotate(-3deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) rotate(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8) translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .animated-entry {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .animated-entry.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .animated-entry:nth-child(1) {
+    transition-delay: 0s;
+  }
+
+  .animated-entry:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .animated-entry:nth-child(3) {
+    transition-delay: 0.2s;
+  }
+
+  .animated-entry:nth-child(4) {
+    transition-delay: 0.3s;
+  }
+
+  .animated-entry:nth-child(5) {
+    transition-delay: 0.4s;
+  }
+
+  .animated-entry:nth-child(6) {
+    transition-delay: 0.5s;
+  }
+
+  .lesson-card {
+    background: linear-gradient(to bottom, #ffffff 0%, #fafbfb 100%);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(26, 95, 63, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .lesson-card:hover {
+    box-shadow: 0 8px 32px rgba(26, 95, 63, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .lesson-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .lesson-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--accent-color);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(26, 95, 63, 0.2);
+  }
+
+  .lesson-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .lesson-date {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.65;
+    font-weight: 500;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  .lesson-content {
+    list-style: none;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+
+  .lesson-content li {
+    position: relative;
+    padding-right: 2.5rem;
+    line-height: 2.2;
+    font-size: 1.2rem;
+    color: #2a2a2a;
+    font-weight: 400;
+    font-family: 'Amiri', 'Traditional Arabic', serif;
+    text-align: right;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .lesson-content li::before {
+    content: "◆";
+    position: absolute;
+    right: 0;
+    top: 0.15rem;
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .lesson-card {
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .lesson-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .lesson-number {
+      width: 48px;
+      height: 48px;
+      font-size: 1.25rem;
+    }
+
+    .lesson-title {
+      font-size: 1.45rem;
+    }
+
+    .lesson-content {
+      gap: 1.25rem;
+    }
+
+    .lesson-content li {
+      font-size: 1.1rem;
+      line-height: 2.1;
+      padding-right: 2.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lesson-card {
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      border-radius: 14px;
+    }
+
+    .lesson-header {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .lesson-title {
+      font-size: 1.35rem;
+      width: 100%;
+      order: 2;
+    }
+
+    .lesson-number {
+      order: 1;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+    }
+
+    .lesson-date {
+      order: 3;
+      width: 100%;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .lesson-content {
+      gap: 1.25rem;
+    }
+
+    .lesson-content li {
+      font-size: 1.1rem;
+      line-height: 2.1;
+      padding-right: 2.25rem;
+    }
+  }
+
+  @media (max-width: 375px) {
+    .lesson-card {
+      padding: 1.5rem;
+    }
+
+    .lesson-content li {
+      font-size: 1.05rem;
+      line-height: 2;
+      padding-right: 2rem;
+    }
+
+    .lesson-header {
+      margin-bottom: 1.25rem;
+    }
+  }
+</style>
+
+<script>
+  // Observer les animations quand les éléments entrent dans le viewport
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Désactiver l'observation après l'animation
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observer toutes les cartes avec la classe animated-entry
+  document.querySelectorAll('.animated-entry').forEach(el => {
+    observer.observe(el);
+  });
+</script>
