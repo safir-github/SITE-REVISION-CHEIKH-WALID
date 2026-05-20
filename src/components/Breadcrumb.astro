@@ -4,12 +4,13 @@ interface Props {
 }
 
 const { bookTitle } = Astro.props;
+const homePath = new URL('/', Astro.url).pathname;
 ---
 
 <nav class="breadcrumb" dir="rtl">
   <ol itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a href="/" itemprop="item">
+      <a href={homePath} itemprop="item">
         <span itemprop="name">الرئيسية</span>
       </a>
       <meta itemprop="position" content="1" />
